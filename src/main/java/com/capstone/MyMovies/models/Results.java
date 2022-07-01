@@ -156,5 +156,5 @@ public class Results {
         sb.append(", \"vote\":").append(vote);
         sb.append('}');
         return sb.toString();
-    }
+   }
 }

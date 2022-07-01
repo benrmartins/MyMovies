@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Set;
 @Entity
 public class Favorites {
@@ -16,9 +17,10 @@ public class Favorites {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Long id;
 
+
     @JsonProperty("results")
-    @Column(name="results", nullable = false)
-    private Results[] results;
+    @Column(name="results")
+    private String[] results;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -27,9 +29,10 @@ public class Favorites {
     public Favorites() {
     }
 
-    public Favorites(Long id, Results[] results) {
+    public Favorites(Long id, String[] results, User user) {
         this.id = id;
         this.results = results;
+        this.user = user;
     }
 
     public Long getId() {
@@ -40,15 +43,28 @@ public class Favorites {
         this.id = id;
     }
 
-    public void setResults(Results[] results) {
+    public String[] getResults() {
+        return results;
+    }
+
+    public void setResults(String[] results) {
         this.results = results;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("\"id\":").append(id);
-        sb.append(", \"results\":").append(results);
+        sb.append(", \"results\":").append(Arrays.toString(results));
+        sb.append(", \"user\":").append(user);
         sb.append('}');
         return sb.toString();
     }
