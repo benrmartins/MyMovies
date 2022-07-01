@@ -14,7 +14,7 @@ public class User {
     private String name;
     private Integer age;
 
-    @OneToMany(mappedBy = "favorites", fetch = FetchType.LAZY) // match the variable name in the Entity class
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) // match the variable name in the Entity class
     private Set<Favorites> favorites;
 
     public User() {

@@ -23,16 +23,16 @@ public class FavoritesControllers {
     @Autowired
     private FavoritesRepository favoritesRepository;
 
-//    @Autowired
-//    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private final String BASE_URL = "https://api.themoviedb.org/3/search/movie?api_key=";
 
-    @GetMapping("/{movie}")
+    @GetMapping("/{title}")
     public ResponseEntity<?> findMovie(RestTemplate restTemplate, @PathVariable String title) {
-        String url = BASE_URL + env.getProperty("AV_API_KEY") + "&query=" + title;
+        String url = BASE_URL + env.getProperty("AV-API-KEY") + "&query=" + title;
+        System.out.println(url);
         Favorites favorite = restTemplate.getForObject(url, Favorites.class);
-
         return ResponseEntity.ok(favorite);
 
     }
