@@ -1,9 +1,6 @@
 package com.capstone.MyMovies.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class User {
@@ -14,8 +11,6 @@ public class User {
     private String name;
     private Integer age;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) // match the variable name in the Entity class
-    private Set<Favorites> favorites;
 
     public User() {
     }

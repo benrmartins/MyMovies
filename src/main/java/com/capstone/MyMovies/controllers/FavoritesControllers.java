@@ -1,11 +1,10 @@
 package com.capstone.MyMovies.controllers;
 
 
-import com.capstone.MyMovies.models.Favorites;
-import com.capstone.MyMovies.repositories.FavoritesRepository;
-import com.capstone.MyMovies.repositories.UserRepository;
+import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,23 +17,22 @@ import org.springframework.web.client.RestTemplate;
 public class FavoritesControllers {
 
     @Autowired
-    private Environment env;
+    private RestTemplate restTemplate;
+    @Value("${myMovies.props.apiKey")
+    public String apiKey;
 
-    @Autowired
-    private FavoritesRepository favoritesRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    private final String BASE_URL = "https://api.themoviedb.org/3/search/movie?api_key=";
+    @GetMapping("/test")
+    public ResponseEntity<String> testRoute() {
+        return new ResponseEntity<>("movie Routes", HttpStatus.OK);
+    }
 
     @GetMapping("/{title}")
-    public ResponseEntity<?> findMovie(RestTemplate restTemplate, @PathVariable String title) {
-        String url = BASE_URL + env.getProperty("AV-API-KEY") + "&query=" + title;
-        System.out.println(url);
-        Favorites favorite = restTemplate.getForObject(url, Favorites.class);
-        return ResponseEntity.ok(favorite);
+    public ResponseEntity<?> getFavorites(@PathVariable String title) {
+        String url = "https://api.themoviedb.org/3/search/movie?api_key=" + "d6277369e412f84f7c1eb673062ab1a5" + "&query=" + title;
 
+        MovieApi response = restTemplate.getForObject(url, MovieApi.class);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
