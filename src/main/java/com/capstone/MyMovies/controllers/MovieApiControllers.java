@@ -1,9 +1,11 @@
 package com.capstone.MyMovies.controllers;
 
 
+import com.capstone.MyMovies.models.User;
 import com.capstone.MyMovies.payloads.ApiResponse.Movie;
 import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
 import com.capstone.MyMovies.repositories.MovieRepository;
+import com.capstone.MyMovies.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8787")
@@ -20,12 +23,11 @@ public class MovieApiControllers {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private RestTemplate restTemplate;
-
-    @Value("${myMovies.props.apiKey")
-    public String apiKey;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -46,7 +48,7 @@ public class MovieApiControllers {
 
     @PostMapping("/{title}")
     public ResponseEntity<?> postFavorites(RestTemplate restTemplate, @PathVariable String title) {
-        String url = "https://api.themoviedb.org/3/search/movie?api_key=" +  env.getProperty("AV_API_KEY") + "&query=" + title;
+        String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
 
         MovieApi response = restTemplate.getForObject(url, MovieApi.class);
 
@@ -54,5 +56,15 @@ public class MovieApiControllers {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    private ResponseEntity<?> getAllFavorites() {
+
+        Iterable<Movie> allMovieApi = movieRepository.findAll();
+        return ResponseEntity.ok(allMovieApi);
+
+    }
+
+
 
 }

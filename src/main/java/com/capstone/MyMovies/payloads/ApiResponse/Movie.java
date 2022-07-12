@@ -1,12 +1,16 @@
 package com.capstone.MyMovies.payloads.ApiResponse;
 
+import com.capstone.MyMovies.models.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 @Entity
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -18,8 +22,11 @@ public class Movie {
     private String original_language;
     private Integer popularity;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // (name = {variable_id})
+    private User user;
 
-    public Movie(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
+    public Movie(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity, User user) {
         this.id = id;
         this.title = title;
         this.poster_path = poster_path;
@@ -28,6 +35,7 @@ public class Movie {
         this.vote_average = vote_average;
         this.original_language = original_language;
         this.popularity = popularity;
+        this.user = user;
     }
 
     public Movie() {
@@ -95,6 +103,14 @@ public class Movie {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

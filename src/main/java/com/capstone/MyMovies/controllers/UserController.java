@@ -1,6 +1,7 @@
 package com.capstone.MyMovies.controllers;
 
 import com.capstone.MyMovies.models.User;
+import com.capstone.MyMovies.repositories.MovieRepository;
 import com.capstone.MyMovies.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     @GetMapping("/test")
     public ResponseEntity<?> testRoute() {
@@ -33,4 +37,6 @@ public class UserController {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+
 }
