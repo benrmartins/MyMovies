@@ -1,17 +1,18 @@
 package com.capstone.MyMovies.payloads.ApiResponse;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 public class MovieApi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private List<Results> results;
+    private Movie[] results;
 
-    public MovieApi(Long id) {
+    public MovieApi(Long id, Movie[] results) {
         this.id = id;
+        this.results = results;
     }
 
     public MovieApi() {
@@ -25,12 +26,14 @@ public class MovieApi {
         this.id = id;
     }
 
-    public List<Results> getResults() {
+    public Movie[] getResults() {
         return results;
     }
 
-    public void setResults(List<Results> results) {
+    public void setResults(Movie[] results) {
         this.results = results;
     }
+
+
 }
 

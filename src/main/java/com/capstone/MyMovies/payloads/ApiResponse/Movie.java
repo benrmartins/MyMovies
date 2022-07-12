@@ -1,29 +1,44 @@
 package com.capstone.MyMovies.payloads.ApiResponse;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 
-public class Results {
+@Entity
+public class Movie {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String title;
     private String poster_path;
     private String release_date;
+
+    private String overview;
     private Integer vote_average;
     private String original_language;
     private Integer popularity;
 
 
-    public Results(String title, String poster_path, String release_date, Integer vote_average, String original_language, Integer popularity) {
+    public Movie(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
+        this.id = id;
         this.title = title;
         this.poster_path = poster_path;
         this.release_date = release_date;
+        this.overview = overview;
         this.vote_average = vote_average;
         this.original_language = original_language;
         this.popularity = popularity;
     }
 
-    public Results() {
+    public Movie() {
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getTitle() {
@@ -72,6 +87,14 @@ public class Results {
 
     public void setPopularity(Integer popularity) {
         this.popularity = popularity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 
