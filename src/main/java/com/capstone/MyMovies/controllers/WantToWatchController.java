@@ -21,9 +21,6 @@ public class WantToWatchController {
     private Environment env;
 
     @Autowired
-    private WantToWatch wantToWatch;
-
-    @Autowired
     private RestTemplate restTemplate;
 
     @Autowired

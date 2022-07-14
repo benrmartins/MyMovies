@@ -19,8 +19,6 @@ public class WatchedController {
     @Autowired
     private Environment env;
 
-    @Autowired
-    private Watched watched;
 
     @Autowired
     private WatchedRepository watchedRepository;

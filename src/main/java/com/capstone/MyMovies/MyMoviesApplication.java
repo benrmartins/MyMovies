@@ -1,5 +1,6 @@
 package com.capstone.MyMovies;
 
+import com.capstone.MyMovies.models.Review;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ public class MyMoviesApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyMoviesApplication.class, args);

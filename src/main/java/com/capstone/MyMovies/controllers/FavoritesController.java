@@ -1,6 +1,5 @@
 package com.capstone.MyMovies.controllers;
 
-
 import com.capstone.MyMovies.models.Favorites;
 import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
 import com.capstone.MyMovies.repositories.FavoriteRepository;
@@ -62,8 +61,6 @@ public class FavoritesController {
         return ResponseEntity.ok(allMovieApi);
 
     }
-
-
 
 
 }
