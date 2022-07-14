@@ -1,11 +1,6 @@
 package com.capstone.MyMovies.models;
 
-import com.capstone.MyMovies.payloads.ApiResponse.Movie;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class User {
@@ -15,10 +10,6 @@ public class User {
     private Long id;
     private String name;
     private Integer age;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) // match the variable name in the Entity class
-    private Set<Movie> movie;
-
 
     public User() {
     }
@@ -53,11 +44,4 @@ public class User {
         this.age = age;
     }
 
-    public Set<Movie> getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Set<Movie> movie) {
-        this.movie = movie;
-    }
 }

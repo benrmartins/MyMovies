@@ -1,13 +1,12 @@
-package com.capstone.MyMovies.payloads.ApiResponse;
+package com.capstone.MyMovies.models;
 
-import com.capstone.MyMovies.models.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-public class Movie {
+public class WantToWatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +21,8 @@ public class Movie {
     private String original_language;
     private Integer popularity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id") // (name = {variable_id})
-    private User user;
 
-    public Movie(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity, User user) {
+    public WantToWatch(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
         this.title = title;
         this.poster_path = poster_path;
@@ -35,10 +31,9 @@ public class Movie {
         this.vote_average = vote_average;
         this.original_language = original_language;
         this.popularity = popularity;
-        this.user = user;
     }
 
-    public Movie() {
+    public WantToWatch() {
     }
 
     public String getOverview() {
@@ -105,12 +100,4 @@ public class Movie {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
-
