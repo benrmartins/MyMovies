@@ -23,6 +23,7 @@ public class WantToWatchController {
     @Autowired
     private RestTemplate restTemplate;
 
+
     @Autowired
     private WantToWatchRepository wantToWatchRepository;
 
