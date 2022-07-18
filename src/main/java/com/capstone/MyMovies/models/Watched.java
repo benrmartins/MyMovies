@@ -1,9 +1,6 @@
 package com.capstone.MyMovies.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Watched {
@@ -21,6 +18,10 @@ public class Watched {
     private String original_language;
     private Integer popularity;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
 
     public Watched(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
@@ -34,6 +35,14 @@ public class Watched {
     }
 
     public Watched() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getOverview() {

@@ -19,6 +19,9 @@ public class User {
     @JsonIncludeProperties({"movieTitle", "body", "rating"})
     private Set<Review> notes;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIncludeProperties({"movieTitle", "body", "rating"})
+    private Set<Watched> watched;
 
     public User() {
     }
@@ -35,6 +38,14 @@ public class User {
 
     public void setNotes(Set<Review> notes) {
         this.notes = notes;
+    }
+
+    public Set<Watched> getWatched() {
+        return watched;
+    }
+
+    public void setWatched(Set<Watched> watched) {
+        this.watched = watched;
     }
 
     public Long getId() {
