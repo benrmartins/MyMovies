@@ -1,11 +1,9 @@
 package com.capstone.MyMovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import org.springframework.context.annotation.Bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Review {
@@ -17,6 +15,11 @@ public class Review {
     private String body;
     private Integer rating;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+
     public Review(Long id, String movieTitle, String body, Integer rating) {
         this.id = id;
         this.movieTitle = movieTitle;
@@ -25,6 +28,14 @@ public class Review {
     }
 
     public Review() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
