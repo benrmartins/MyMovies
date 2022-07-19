@@ -13,7 +13,6 @@ public class WantToWatchApi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private WantToWatch[] wantToWatch;
 
     public WantToWatchApi(Long id, WantToWatch[] wantToWatch) {

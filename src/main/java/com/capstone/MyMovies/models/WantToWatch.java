@@ -1,9 +1,8 @@
 package com.capstone.MyMovies.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
+import javax.persistence.*;
 
 @Entity
 public class WantToWatch {
@@ -21,6 +20,11 @@ public class WantToWatch {
     private String original_language;
     private Integer popularity;
 
+    @ManyToOne
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonIncludeProperties({"id", "name"})
+    private Profile profile;
+
 
     public WantToWatch(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
@@ -31,6 +35,14 @@ public class WantToWatch {
         this.vote_average = vote_average;
         this.original_language = original_language;
         this.popularity = popularity;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public WantToWatch() {

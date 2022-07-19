@@ -1,9 +1,9 @@
 package com.capstone.MyMovies.controllers;
 
 import com.capstone.MyMovies.models.Review;
-import com.capstone.MyMovies.models.User;
+import com.capstone.MyMovies.models.Profile;
 import com.capstone.MyMovies.repositories.ReviewRepository;
-import com.capstone.MyMovies.repositories.UserRepository;
+import com.capstone.MyMovies.repositories.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -29,19 +29,19 @@ public class ReviewController {
     private RestTemplate restTemplate;
 
     @Autowired
-    private UserRepository userRepository;
+    private ProfileRepository profileRepository;
 
     @GetMapping("/test")
     public ResponseEntity<?> testRoute() {
         return new ResponseEntity<>("note route", HttpStatus.OK);
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<?> createReview(@PathVariable Long userId, @RequestBody Review newReview) {
-        User user = userRepository.findById(userId).orElseThrow(
+    @PostMapping("/{profileId}")
+    public ResponseEntity<?> createReview(@PathVariable Long profileId, @RequestBody Review newReview) {
+        Profile profile = profileRepository.findById(profileId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        newReview.setUser(user);
+        newReview.setProfile(profile);
 
         Review review = reviewRepository.save(newReview);
         return new ResponseEntity<>(review, HttpStatus.CREATED);
@@ -62,9 +62,9 @@ public class ReviewController {
         return new ResponseEntity<>(review, HttpStatus.OK);
     }
 
-    @GetMapping("User/{userId}")
-    public  ResponseEntity<List<Review>> getReviewsByListener(@PathVariable Long userId) {
-        List<Review> reviews = reviewRepository.findAllByUser_id(userId);
+    @GetMapping("Profile/{profileId}")
+    public  ResponseEntity<List<Review>> getReviewsByListener(@PathVariable Long profileId) {
+        List<Review> reviews = reviewRepository.findAllByProfile_id(profileId);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
 
     }

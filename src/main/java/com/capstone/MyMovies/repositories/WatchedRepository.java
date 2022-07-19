@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WatchedRepository extends JpaRepository<Watched, Long> {
-    List<Watched> findAllByUser_id(Long user_id);
+    List<Watched> findAllByProfile_id(Long profile_id);
 
 
 }

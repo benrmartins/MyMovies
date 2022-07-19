@@ -1,10 +1,14 @@
 package com.capstone.MyMovies.controllers;
 
-import com.capstone.MyMovies.models.Review;
-import com.capstone.MyMovies.models.User;
+import com.capstone.MyMovies.models.Favorites;
+import com.capstone.MyMovies.models.Profile;
+import com.capstone.MyMovies.models.WantToWatch;
 import com.capstone.MyMovies.models.Watched;
+import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
+import com.capstone.MyMovies.payloads.ApiResponse.WantToWatchApi;
 import com.capstone.MyMovies.payloads.ApiResponse.WatchedApi;
-import com.capstone.MyMovies.repositories.UserRepository;
+import com.capstone.MyMovies.repositories.FavoriteRepository;
+import com.capstone.MyMovies.repositories.ProfileRepository;
 import com.capstone.MyMovies.repositories.WatchedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -25,14 +29,13 @@ public class WatchedController {
     @Autowired
     private Environment env;
 
-
     @Autowired
     private WatchedRepository watchedRepository;
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
-    private UserRepository userRepository;
+    private ProfileRepository profileRepository;
 
     @GetMapping("/test")
     public ResponseEntity<String> testRoute() {
@@ -66,23 +69,25 @@ public class WatchedController {
         return ResponseEntity.ok(allMovieApi);
     }
 
-    @PostMapping("/{userId}/{title}")
-    public ResponseEntity<?> postUserWatched(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long userId) {
+    @PostMapping("/{profileId}/{title}")
+    public ResponseEntity<?> postProfileWatched(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long profileId) {
         String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
 
-        User user = userRepository.findById(userId).orElseThrow(
+        Profile profile = profileRepository.findById(profileId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         WatchedApi response = restTemplate.getForObject(url, WatchedApi.class);
 
-        Watched watched = watchedRepository.save(response.getResults()[0]);
+        Watched newWatched = response.getResults()[0];
 
-        watched.setUser(user);
+        newWatched.setProfile(profile);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Watched watched = watchedRepository.save(newWatched);
+
+        return new ResponseEntity<>(watched, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("get/{id}")
     public ResponseEntity<Watched> getReviewByID(@PathVariable Long id) {
         Watched watched = watchedRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
@@ -90,12 +95,13 @@ public class WatchedController {
         return new ResponseEntity<>(watched, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{userId}")
-    public  ResponseEntity<List<Watched>> getReviewsByListener(@PathVariable Long userId) {
-        List<Watched> watched = watchedRepository.findAllByUser_id(userId);
+    @GetMapping("/profile/{profileId}")
+    public  ResponseEntity<List<Watched>> getReviewsByListener(@PathVariable Long profileId) {
+        List<Watched> watched = watchedRepository.findAllByProfile_id(profileId);
         return new ResponseEntity<>(watched, HttpStatus.OK);
 
     }
+
 
 
 

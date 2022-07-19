@@ -1,5 +1,7 @@
 package com.capstone.MyMovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,11 @@ public class Favorites {
     private String original_language;
     private Integer popularity;
 
+    @ManyToOne
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonIncludeProperties({"id", "name"})
+    private Profile profile;
+
 
     public Favorites(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
@@ -30,6 +37,14 @@ public class Favorites {
     }
 
     public Favorites() {
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public String getOverview() {

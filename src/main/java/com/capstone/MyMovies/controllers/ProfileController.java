@@ -1,8 +1,8 @@
 package com.capstone.MyMovies.controllers;
 
-import com.capstone.MyMovies.models.User;
+import com.capstone.MyMovies.models.Profile;
 import com.capstone.MyMovies.repositories.FavoriteRepository;
-import com.capstone.MyMovies.repositories.UserRepository;
+import com.capstone.MyMovies.repositories.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/profile")
+public class ProfileController {
 
     @Autowired
-    private UserRepository userRepository;
+    private ProfileRepository profileRepository;
 
     @Autowired
     private FavoriteRepository favoriteRepository;
@@ -27,15 +27,15 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<User> createUser(@RequestBody User newUser) {
-        User user = userRepository.save(newUser);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    public ResponseEntity<Profile> createProfile(@RequestBody Profile newProfile) {
+        Profile profile = profileRepository.save(newProfile);
+        return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<Profile>> getAllProfiles() {
+        List<Profile> profiles = profileRepository.findAll();
+        return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
 
 

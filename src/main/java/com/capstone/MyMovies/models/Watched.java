@@ -1,5 +1,8 @@
 package com.capstone.MyMovies.models;
 
+import com.capstone.MyMovies.payloads.ApiResponse.WatchedApi;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,8 +22,9 @@ public class Watched {
     private Integer popularity;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonIncludeProperties({"id", "name"})
+    private Profile profile;
 
 
     public Watched(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
@@ -34,15 +38,16 @@ public class Watched {
         this.popularity = popularity;
     }
 
+
     public Watched() {
     }
 
-    public User getUser() {
-        return user;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public String getOverview() {

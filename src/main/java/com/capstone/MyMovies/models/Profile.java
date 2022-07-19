@@ -1,13 +1,12 @@
 package com.capstone.MyMovies.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class User {
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,21 +14,42 @@ public class User {
     private String name;
     private Integer age;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     @JsonIncludeProperties({"movieTitle", "body", "rating"})
     private Set<Review> notes;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIncludeProperties({"movieTitle", "body", "rating"})
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     private Set<Watched> watched;
 
-    public User() {
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
+    private Set<WantToWatch> wantToWatch;
+
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
+    private Set<Favorites> favorites;
+
+    public Profile() {
     }
 
-    public User(Long id, String name, Integer age) {
+    public Profile(Long id, String name, Integer age) {
         this.id = id;
         this.name = name;
         this.age = age;
+    }
+
+    public Set<Favorites> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Set<Favorites> favorites) {
+        this.favorites = favorites;
+    }
+
+    public Set<WantToWatch> getWantToWatch() {
+        return wantToWatch;
+    }
+
+    public void setWantToWatch(Set<WantToWatch> wantToWatch) {
+        this.wantToWatch = wantToWatch;
     }
 
     public Set<Review> getNotes() {
