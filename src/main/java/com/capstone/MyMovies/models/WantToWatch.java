@@ -26,6 +26,7 @@ public class WantToWatch {
     private Profile profile;
 
 
+
     public WantToWatch(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
         this.title = title;

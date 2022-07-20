@@ -31,14 +31,12 @@ public class WantToWatchApi {
         this.id = id;
     }
 
-    public WantToWatch[] getResults() {
+    public WantToWatch[] getWantToWatch() {
         return wantToWatch;
     }
 
-    public void setResults(WantToWatch[] watched) {
+    public void setWantToWatch(WantToWatch[] wantToWatch) {
         this.wantToWatch = wantToWatch;
     }
-
-
 }
 
