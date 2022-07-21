@@ -1,12 +1,17 @@
 package com.capstone.MyMovies.controllers;
 
 import com.capstone.MyMovies.models.Profile;
+import com.capstone.MyMovies.models.User;
 import com.capstone.MyMovies.repositories.FavoriteRepository;
 import com.capstone.MyMovies.repositories.ProfileRepository;
+import com.capstone.MyMovies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,7 +24,7 @@ public class ProfileController {
     private ProfileRepository profileRepository;
 
     @Autowired
-    private FavoriteRepository favoriteRepository;
+    private UserService userService;
 
     @GetMapping("/test")
     public ResponseEntity<?> testRoute() {
@@ -28,6 +33,15 @@ public class ProfileController {
 
     @PostMapping("/")
     public ResponseEntity<Profile> createProfile(@RequestBody Profile newProfile) {
+
+        User currentUser = userService.getCurrentUser();
+
+        if(currentUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        newProfile.setUser(currentUser);
+
         Profile profile = profileRepository.save(newProfile);
         return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }

@@ -2,8 +2,10 @@ package com.capstone.MyMovies.controllers;
 
 import com.capstone.MyMovies.models.Review;
 import com.capstone.MyMovies.models.Profile;
+import com.capstone.MyMovies.models.User;
 import com.capstone.MyMovies.repositories.ReviewRepository;
 import com.capstone.MyMovies.repositories.ProfileRepository;
+import com.capstone.MyMovies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,9 @@ public class ReviewController {
     private RestTemplate restTemplate;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ProfileRepository profileRepository;
 
     @GetMapping("/test")
@@ -37,8 +42,17 @@ public class ReviewController {
     }
 
     @PostMapping("/{profileId}")
-    public ResponseEntity<?> createReview(@PathVariable Long profileId, @RequestBody Review newReview) {
-        Profile profile = profileRepository.findById(profileId).orElseThrow(
+    public ResponseEntity<?> createReview (@RequestBody Review newReview) {
+
+        User currentUser = userService.getCurrentUser();
+
+        if(currentUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+
+
+        Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         newReview.setProfile(profile);
@@ -62,7 +76,7 @@ public class ReviewController {
         return new ResponseEntity<>(review, HttpStatus.OK);
     }
 
-    @GetMapping("Profile/{profileId}")
+    @GetMapping("profile/{profileId}")
     public  ResponseEntity<List<Review>> getReviewsByListener(@PathVariable Long profileId) {
         List<Review> reviews = reviewRepository.findAllByProfile_id(profileId);
         return new ResponseEntity<>(reviews, HttpStatus.OK);

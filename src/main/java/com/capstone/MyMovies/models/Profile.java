@@ -15,6 +15,11 @@ public class Profile {
     private String name;
     private Integer age;
 
+    @OneToOne
+    @JoinColumn(name="users_id", referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
+
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     @JsonIncludeProperties({"movieTitle", "body", "rating"})
     private Set<Review> notes;
@@ -31,10 +36,20 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(Long id, String name, Integer age) {
+    public Profile(Long id, String name, Integer age, User user) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.user = user;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Favorites> getFavorites() {
