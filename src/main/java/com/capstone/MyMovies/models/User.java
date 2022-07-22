@@ -1,7 +1,5 @@
 package com.capstone.MyMovies.models;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

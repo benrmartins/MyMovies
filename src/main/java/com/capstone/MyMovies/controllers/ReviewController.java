@@ -51,7 +51,6 @@ public class ReviewController {
         }
 
 
-
         Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -80,7 +79,6 @@ public class ReviewController {
     public  ResponseEntity<List<Review>> getReviewsByListener(@PathVariable Long profileId) {
         List<Review> reviews = reviewRepository.findAllByProfile_id(profileId);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
-
     }
 
 

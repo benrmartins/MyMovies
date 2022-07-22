@@ -1,6 +1,5 @@
 package com.capstone.MyMovies.models;
 
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 
@@ -15,6 +14,11 @@ public class Role {
     private ERole name;
 
     public Role() {
+    }
+
+    public Role(Long id, ERole name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId() {

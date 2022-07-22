@@ -19,8 +19,6 @@ public class JwtUtils {
     @Value("${MyMovies.props.jwtSecret")
     private String jwtSecret;
 
-//    @Value("${muzick.props.jwtExpirationMs}")
-//    private int jwtExpirationMs;
 
     public boolean validateJwtToken(String authToken) {
         try {
@@ -39,7 +37,6 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
-//                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.ES512, jwtSecret)
                 .compact();
     }
