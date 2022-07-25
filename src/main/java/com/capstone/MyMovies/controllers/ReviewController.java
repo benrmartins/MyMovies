@@ -50,7 +50,6 @@ public class ReviewController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
-
         Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

@@ -2,6 +2,7 @@ package com.capstone.MyMovies.controllers;
 
 import com.capstone.MyMovies.models.Profile;
 import com.capstone.MyMovies.models.User;
+import com.capstone.MyMovies.repositories.FavoriteRepository;
 import com.capstone.MyMovies.repositories.ProfileRepository;
 import com.capstone.MyMovies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

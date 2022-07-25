@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class AuthController {
     @Autowired
     private UserRepository userRepository;
-//
+
     @Autowired
     private RoleRepository roleRepository;
 

@@ -1,15 +1,13 @@
 package com.capstone.MyMovies.controllers;
 
-import com.capstone.MyMovies.models.Favorites;
-import com.capstone.MyMovies.models.Profile;
-import com.capstone.MyMovies.models.WantToWatch;
-import com.capstone.MyMovies.models.Watched;
+import com.capstone.MyMovies.models.*;
 import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
 import com.capstone.MyMovies.payloads.ApiResponse.WantToWatchApi;
 import com.capstone.MyMovies.payloads.ApiResponse.WatchedApi;
 import com.capstone.MyMovies.repositories.FavoriteRepository;
 import com.capstone.MyMovies.repositories.ProfileRepository;
 import com.capstone.MyMovies.repositories.WatchedRepository;
+import com.capstone.MyMovies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -33,6 +31,9 @@ public class WatchedController {
     private WatchedRepository watchedRepository;
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -73,7 +74,13 @@ public class WatchedController {
     public ResponseEntity<?> postProfileWatched(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long profileId) {
         String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
 
-        Profile profile = profileRepository.findById(profileId).orElseThrow(
+        User currentUser = userService.getCurrentUser();
+
+        if(currentUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         WatchedApi response = restTemplate.getForObject(url, WatchedApi.class);
@@ -87,7 +94,7 @@ public class WatchedController {
         return new ResponseEntity<>(watched, HttpStatus.OK);
     }
 
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Watched> getReviewByID(@PathVariable Long id) {
         Watched watched = watchedRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)

@@ -1,12 +1,10 @@
 package com.capstone.MyMovies.controllers;
 
-import com.capstone.MyMovies.models.Favorites;
-import com.capstone.MyMovies.models.Profile;
-import com.capstone.MyMovies.models.WantToWatch;
-import com.capstone.MyMovies.models.Watched;
+import com.capstone.MyMovies.models.*;
 import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
 import com.capstone.MyMovies.repositories.FavoriteRepository;
 import com.capstone.MyMovies.repositories.ProfileRepository;
+import com.capstone.MyMovies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -33,6 +31,9 @@ public class FavoritesController {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/test")
     public ResponseEntity<String> testRoute() {
@@ -73,8 +74,15 @@ public class FavoritesController {
     public ResponseEntity<?> postProfileFavorite(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long profileId) {
         String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
 
-        Profile profile = profileRepository.findById(profileId).orElseThrow(
+        User currentUser = userService.getCurrentUser();
+
+        if(currentUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
 
         MovieApi response = restTemplate.getForObject(url, MovieApi.class);
 
