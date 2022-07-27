@@ -1,11 +1,10 @@
 package com.capstone.MyMovies.models;
 
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import javax.persistence.*;
 
-@Entity
-public class WantToWatch {
+public class Search {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,17 +12,14 @@ public class WantToWatch {
     private String title;
     private String poster_path;
     private String release_date;
+
     private String overview;
     private Integer vote_average;
     private String original_language;
     private Integer popularity;
 
-    @ManyToOne
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    @JsonIncludeProperties({"id", "name"})
-    private Profile profile;
 
-    public WantToWatch(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
+    public Search(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
         this.title = title;
         this.poster_path = poster_path;
@@ -34,18 +30,15 @@ public class WantToWatch {
         this.popularity = popularity;
     }
 
-
-
-    public WantToWatch() {
+    public Search() {
     }
 
-
-    public Long getId() {
-        return id;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getTitle() {
@@ -72,14 +65,6 @@ public class WantToWatch {
         this.release_date = release_date;
     }
 
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
     public Integer getVote_average() {
         return vote_average;
     }
@@ -104,11 +89,11 @@ public class WantToWatch {
         this.popularity = popularity;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public Long getId() {
+        return id;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setId(Long id) {
+        this.id = id;
     }
 }
