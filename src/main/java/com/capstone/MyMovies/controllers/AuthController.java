@@ -45,6 +45,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
     private JwtUtils jwtUtils;
 
     @PostMapping("/signin")

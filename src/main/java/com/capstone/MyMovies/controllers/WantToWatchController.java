@@ -2,9 +2,9 @@ package com.capstone.MyMovies.controllers;
 
 
 import com.capstone.MyMovies.models.Profile;
+import com.capstone.MyMovies.models.User;
 import com.capstone.MyMovies.models.WantToWatch;
 import com.capstone.MyMovies.payloads.ApiResponse.WantToWatchApi;
-import com.capstone.MyMovies.payloads.ApiResponse.WatchedApi;
 import com.capstone.MyMovies.repositories.ProfileRepository;
 import com.capstone.MyMovies.repositories.WantToWatchRepository;
 import com.capstone.MyMovies.services.UserService;
@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8787")
@@ -68,44 +70,44 @@ public class WantToWatchController {
         return ResponseEntity.ok(allWantToWatchApi);
 
     }
-//    @PostMapping("/{profileId}/{title}")
-//    public ResponseEntity<?> postProfileWantToWatch(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long profileId) {
-//        String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
-//
-//       User currentUser = userService.getCurrentUser();
-//
-//        if(currentUser == null) {
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-//        }
-//
-//        Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
-//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        WantToWatchApi response = restTemplate.getForObject(url, WantToWatchApi.class);
-//
-//        WantToWatch newWantToWatch = response.getWantToWatch()[0];
-//
-//        newWantToWatch.setProfile(profile);
-//
-//        WantToWatch wantToWatch = wantToWatchRepository.save(newWantToWatch);
-//
-//        return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
-//    }
+    @PostMapping("/get/{profileId}/{title}")
+    public ResponseEntity<?> postProfileWantToWatch(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long profileId) {
+        String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<WantToWatch> getWantToWatchByID(@PathVariable Long id) {
-//        WantToWatch wantToWatch = wantToWatchRepository.findById(id).orElseThrow(
-//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-//        );
-//        return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/profile/{profileId}")
-//    public  ResponseEntity<List<WantToWatch>> getWantToWatchByListener(@PathVariable Long profileId) {
-//        List<WantToWatch> wantToWatch = wantToWatchRepository.findAllByProfile_id(profileId);
-//        return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
-//
-//    }
+        User currentUser = userService.getCurrentUser();
+
+        if(currentUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        Profile profile = profileRepository.findByUser_id(currentUser.getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        WantToWatchApi response = restTemplate.getForObject(url, WantToWatchApi.class);
+
+        WantToWatch newWantToWatch = response.getWantToWatch()[0];
+
+        newWantToWatch.setProfile(profile);
+
+        WantToWatch wantToWatch = wantToWatchRepository.save(newWantToWatch);
+
+        return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<WantToWatch> getWantToWatchByID(@PathVariable Long id) {
+        WantToWatch wantToWatch = wantToWatchRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile/{profileId}")
+    public ResponseEntity<List<WantToWatch>> getWantToWatchByListener(@PathVariable Long profileId) {
+        List<WantToWatch> wantToWatch = wantToWatchRepository.findAllByProfile_id(profileId);
+        return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
+
+    }
 
 
 

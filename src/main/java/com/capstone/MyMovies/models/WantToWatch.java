@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 public class WantToWatch {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,8 +24,6 @@ public class WantToWatch {
     @JsonIncludeProperties({"id", "name"})
     private Profile profile;
 
-
-
     public WantToWatch(Long id, String title, String poster_path, String release_date, String overview, Integer vote_average, String original_language, Integer popularity) {
         this.id = id;
         this.title = title;
@@ -38,23 +35,18 @@ public class WantToWatch {
         this.popularity = popularity;
     }
 
-    public Profile getProfile() {
-        return profile;
-    }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
 
     public WantToWatch() {
     }
 
-    public String getOverview() {
-        return overview;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -81,6 +73,14 @@ public class WantToWatch {
         this.release_date = release_date;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
     public Integer getVote_average() {
         return vote_average;
     }
@@ -105,12 +105,11 @@ public class WantToWatch {
         this.popularity = popularity;
     }
 
-    public Long getId() {
-        return id;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
-
 }

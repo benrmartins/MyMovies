@@ -1,10 +1,7 @@
 package com.capstone.MyMovies.controllers;
 
 import com.capstone.MyMovies.models.*;
-import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
-import com.capstone.MyMovies.payloads.ApiResponse.WantToWatchApi;
 import com.capstone.MyMovies.payloads.ApiResponse.WatchedApi;
-import com.capstone.MyMovies.repositories.FavoriteRepository;
 import com.capstone.MyMovies.repositories.ProfileRepository;
 import com.capstone.MyMovies.repositories.WatchedRepository;
 import com.capstone.MyMovies.services.UserService;
@@ -103,7 +100,7 @@ public class WatchedController {
     }
 
     @GetMapping("/profile/{profileId}")
-    public  ResponseEntity<List<Watched>> getReviewsByListener(@PathVariable Long profileId) {
+    public ResponseEntity<List<Watched>> getReviewsByListener(@PathVariable Long profileId) {
         List<Watched> watched = watchedRepository.findAllByProfile_id(profileId);
         return new ResponseEntity<>(watched, HttpStatus.OK);
 

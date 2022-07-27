@@ -1,8 +1,6 @@
 package com.capstone.MyMovies.payloads.ApiResponse;
 
 import com.capstone.MyMovies.models.Favorites;
-import com.capstone.MyMovies.models.WantToWatch;
-import com.capstone.MyMovies.models.Watched;
 
 import javax.persistence.*;
 
