@@ -95,6 +95,13 @@ public class FavoritesController {
         return new ResponseEntity<>(favorites, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        favoriteRepository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
+
+
     @GetMapping("/get/{id}")
     public ResponseEntity<Favorites> getFavoritesByID(@PathVariable Long id) {
         Favorites favorites = favoriteRepository.findById(id).orElseThrow(

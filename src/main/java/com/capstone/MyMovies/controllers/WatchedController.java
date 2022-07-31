@@ -91,6 +91,12 @@ public class WatchedController {
         return new ResponseEntity<>(watched, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        watchedRepository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<Watched> getReviewByID(@PathVariable Long id) {
         Watched watched = watchedRepository.findById(id).orElseThrow(

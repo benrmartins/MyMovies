@@ -60,6 +60,12 @@ public class ReviewController {
 
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        reviewRepository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<Review>> getAllNotes() {
         List<Review> reviews = reviewRepository.findAll();

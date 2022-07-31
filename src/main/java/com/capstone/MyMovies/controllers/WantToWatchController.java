@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8787")
-@RequestMapping("/api/wanttowatch")
+@RequestMapping("/api/want")
 public class WantToWatchController {
 
     @Autowired
@@ -70,7 +70,7 @@ public class WantToWatchController {
         return ResponseEntity.ok(allWantToWatchApi);
 
     }
-    @PostMapping("/get/{profileId}/{title}")
+    @PostMapping("/{profileId}/{title}")
     public ResponseEntity<?> postProfileWantToWatch(RestTemplate restTemplate, @PathVariable String title, @PathVariable Long profileId) {
         String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
 
@@ -92,6 +92,12 @@ public class WantToWatchController {
         WantToWatch wantToWatch = wantToWatchRepository.save(newWantToWatch);
 
         return new ResponseEntity<>(wantToWatch, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        wantToWatchRepository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
