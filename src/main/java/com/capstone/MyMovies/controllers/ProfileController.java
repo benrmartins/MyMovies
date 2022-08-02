@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:8787", "http://localhost:3000"})
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {

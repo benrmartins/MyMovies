@@ -12,8 +12,14 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private Integer age;
+    private String email;
+    private String favoriteGenre;
+
+
+
 
     @OneToOne
     @JoinColumn(name="users_id", referencedColumnName = "id")
@@ -22,7 +28,7 @@ public class Profile {
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     @JsonIncludeProperties({"movieTitle", "body", "rating"})
-    private Set<Review> notes;
+    private Set<Review> reviews;
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     private Set<Watched> watched;
@@ -36,52 +42,13 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(Long id, String name, Integer age, User user) {
+    public Profile(Long id, String firstName, String lastName, Integer age, String email, String favoriteGenre) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.age = age;
-        this.user = user;
-    }
-
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Favorites> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(Set<Favorites> favorites) {
-        this.favorites = favorites;
-    }
-
-    public Set<WantToWatch> getWantToWatch() {
-        return wantToWatch;
-    }
-
-    public void setWantToWatch(Set<WantToWatch> wantToWatch) {
-        this.wantToWatch = wantToWatch;
-    }
-
-    public Set<Review> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(Set<Review> notes) {
-        this.notes = notes;
-    }
-
-    public Set<Watched> getWatched() {
-        return watched;
-    }
-
-    public void setWatched(Set<Watched> watched) {
-        this.watched = watched;
+        this.email = email;
+        this.favoriteGenre = favoriteGenre;
     }
 
     public Long getId() {
@@ -92,12 +59,20 @@ public class Profile {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Integer getAge() {
@@ -108,5 +83,59 @@ public class Profile {
         this.age = age;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFavoriteGenre() {
+        return favoriteGenre;
+    }
+
+    public void setFavoriteGenre(String favoriteGenre) {
+        this.favoriteGenre = favoriteGenre;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Review> getNotes() {
+        return reviews;
+    }
+
+    public void setNotes(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Set<Watched> getWatched() {
+        return watched;
+    }
+
+    public void setWatched(Set<Watched> watched) {
+        this.watched = watched;
+    }
+
+    public Set<WantToWatch> getWantToWatch() {
+        return wantToWatch;
+    }
+
+    public void setWantToWatch(Set<WantToWatch> wantToWatch) {
+        this.wantToWatch = wantToWatch;
+    }
+
+    public Set<Favorites> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Set<Favorites> favorites) {
+        this.favorites = favorites;
+    }
 }

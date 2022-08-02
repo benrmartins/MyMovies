@@ -1,5 +1,7 @@
 package com.capstone.MyMovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonIgnore
     private Profile profile;
 
 
