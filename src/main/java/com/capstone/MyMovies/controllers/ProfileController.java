@@ -46,9 +46,12 @@ public class ProfileController {
 
     @GetMapping("/")
     public ResponseEntity<List<Profile>> getAllProfiles() {
+
         List<Profile> profiles = profileRepository.findAll();
         return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
+
+
 
 
 }

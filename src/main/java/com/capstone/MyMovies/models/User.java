@@ -1,5 +1,7 @@
 package com.capstone.MyMovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +22,11 @@ public class User {
     private String username; // hold an email
 
     private String password; //
+
+    @OneToOne
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonIncludeProperties({"id", "name"})
+    private Profile profile;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -67,5 +74,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }

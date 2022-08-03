@@ -23,7 +23,7 @@ public class Profile {
 
     @OneToOne
     @JoinColumn(name="users_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonIncludeProperties("username")
     private User user;
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
