@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8787")
+@CrossOrigin(origins = {"http://localhost:8787", "http://localhost:3000"})
 @RequestMapping("/api/watched")
 public class WatchedController {
 

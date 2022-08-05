@@ -1,6 +1,7 @@
 package com.capstone.MyMovies.controllers;
 
 
+import com.capstone.MyMovies.payloads.ApiResponse.MovieApi;
 import com.capstone.MyMovies.payloads.ApiResponse.SearchApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8787")
+@CrossOrigin(origins = {"http://localhost:8787", "http://localhost:3000"})
 @RequestMapping("/api/search")
 public class SearchController {
 
@@ -68,6 +69,16 @@ public class SearchController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
+    }
+
+
+    @GetMapping("/{title}")
+    public ResponseEntity<?> searchByTitle(@PathVariable String title) {
+        String url = "https://api.themoviedb.org/3/search/movie?api_key=" + env.getProperty("AV_API_KEY") + "&query=" + title;
+
+        SearchApi response = restTemplate.getForObject(url, SearchApi.class);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

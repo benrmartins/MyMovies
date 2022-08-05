@@ -23,7 +23,7 @@ public class Watched {
 
     @ManyToOne
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    @JsonIncludeProperties({"id", "name"})
+    @JsonIncludeProperties({"id", "email"})
     private Profile profile;
 
 
