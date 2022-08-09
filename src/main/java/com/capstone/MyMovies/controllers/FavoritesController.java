@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8787")
+@CrossOrigin(origins = {"http://localhost:8787", "http://localhost:3000"})
 @RequestMapping("/api/favorites")
 public class FavoritesController {
 

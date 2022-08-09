@@ -11,11 +11,11 @@ public class WantToWatchApi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private WantToWatch[] wantToWatch;
+    private WantToWatch[] results;
 
-    public WantToWatchApi(Long id, WantToWatch[] wantToWatch) {
+    public WantToWatchApi(Long id, WantToWatch[] results) {
         this.id = id;
-        this.wantToWatch = wantToWatch;
+        this.results = results;
     }
 
     public WantToWatchApi() {
@@ -29,11 +29,14 @@ public class WantToWatchApi {
         this.id = id;
     }
 
-    public WantToWatch[] getWantToWatch() {
-        return wantToWatch;
+    public WantToWatch[] getResults() {
+        return results;
     }
 
-    public void setWantToWatch(WantToWatch[] wantToWatch) {
-        this.wantToWatch = wantToWatch;
+    public void setResults(WantToWatch[] results) {
+        this.results = results;
     }
 }
+
+
+

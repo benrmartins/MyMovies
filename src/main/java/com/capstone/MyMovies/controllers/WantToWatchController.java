@@ -19,8 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8787")
-@RequestMapping("/api/want")
+@CrossOrigin(origins = {"http://localhost:8787", "http://localhost:3000"})
+@RequestMapping("/api/wanttowatch")
 public class WantToWatchController {
 
     @Autowired
@@ -58,7 +58,7 @@ public class WantToWatchController {
 
         WantToWatchApi response = restTemplate.getForObject(url, WantToWatchApi.class);
 
-        WantToWatch wantToWatch = wantToWatchRepository.save(response.getWantToWatch()[0]);
+        WantToWatch wantToWatch = wantToWatchRepository.save(response.getResults()[0]);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -85,7 +85,7 @@ public class WantToWatchController {
 
         WantToWatchApi response = restTemplate.getForObject(url, WantToWatchApi.class);
 
-        WantToWatch newWantToWatch = response.getWantToWatch()[0];
+        WantToWatch newWantToWatch = response.getResults()[0];
 
         newWantToWatch.setProfile(profile);
 
