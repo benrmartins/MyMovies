@@ -44,6 +44,12 @@ public class ProfileController {
         return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        profileRepository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<Profile>> getAllProfiles() {
 
