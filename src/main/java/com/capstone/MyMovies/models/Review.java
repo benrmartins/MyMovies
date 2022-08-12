@@ -1,6 +1,7 @@
 package com.capstone.MyMovies.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonIncludeProperties({"firstName", "lastName", "email"})
     private Profile profile;
 
 

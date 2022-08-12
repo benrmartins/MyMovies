@@ -86,6 +86,14 @@ public class ReviewController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Review>> getAllReviews() {
+
+        List<Review> reviews = reviewRepository.findAll();
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
+
 
 
 }
