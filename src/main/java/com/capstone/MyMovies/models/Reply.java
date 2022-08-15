@@ -16,7 +16,6 @@ public class Reply {
     private Integer dislikes;
     private String replyMessage;
 
-
     public Reply(Long id, Integer likes, Integer dislikes, String replyMessage) {
         this.id = id;
         this.likes = likes;
