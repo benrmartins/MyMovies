@@ -21,6 +21,10 @@ public class Review {
     @JsonIncludeProperties({"firstName", "lastName", "email"})
     private Profile profile;
 
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
+    @JsonIncludeProperties({"likes", "dislikes"})
+    private Set<Reply> reply;
+
 
     public Review(Long id, String movieTitle, String body, Integer rating) {
         this.id = id;

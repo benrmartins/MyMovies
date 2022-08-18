@@ -39,6 +39,9 @@ public class Profile {
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     private Set<Favorites> favorites;
 
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
+    private Set<Reply> reply;
+
     public Profile() {
     }
 
