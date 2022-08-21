@@ -37,9 +37,6 @@ public class ReplyController {
         return new ResponseEntity<>("note route", HttpStatus.OK);
     }
 
-//    @PostMapping("/{reviewId}")
-//    public ResponseEntity likeReviewById(@PathVariable Long reviewId) {
-//
-//    }
+
 
 }
